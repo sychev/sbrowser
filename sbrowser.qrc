@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/qss">
+        <file>qss/debugWidget.qss</file>
+        <file>qss/sbrowserWidget.qss</file>
+    </qresource>
+</RCC>

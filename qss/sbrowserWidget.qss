@@ -1,0 +1,22 @@
+MainWindow {
+    /* background-color: #9f9f9f; */
+    margin: 0px;
+    padding: 0px;
+}
+
+SbrowserWidget QTextEdit, SbrowserWidget QLineEdit {
+    /* background-color: #cfcfcf; */
+    border-width: 2px;
+    border-color: #3f3f3f;
+    border-style: solid;
+    border-radius: 5;
+    padding: 2px;
+}
+
+SbrowserWidget QLabel#browserBorderLabel {
+    /* background-color: #cfcfcf; */
+    border-width: 2px;
+    border-color: #3f3f3f;
+    border-style: solid;
+    padding: 2px;
+}
