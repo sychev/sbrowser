@@ -3,15 +3,15 @@
 DebugWidget::DebugWidget(QWidget *parent) :
     QFrame(parent)
 {
-    // Восстанавливаем геометрию виджета
+    // Р’РѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј РіРµРѕРјРµС‚СЂРёСЋ РІРёРґР¶РµС‚Р°
     readSettings();
     setWindowTitle(tr("Regexptest debug mode"));
 
-    // Виджеты управления
-    liveMessage = new QLabel(tr("Лента новостей"), this);
+    // Р’РёРґР¶РµС‚С‹ СѓРїСЂР°РІР»РµРЅРёСЏ
+    liveMessage = new QLabel(tr("Р›РµРЅС‚Р° РЅРѕРІРѕСЃС‚РµР№"), this);
 
-    clearLogButton = new QPushButton(tr("Очистить лог"), this);
-    printDebugInfoButton = new QPushButton(tr("Статус"), this);
+    clearLogButton = new QPushButton(tr("РћС‡РёСЃС‚РёС‚СЊ Р»РѕРі"), this);
+    printDebugInfoButton = new QPushButton(tr("РЎС‚Р°С‚СѓСЃ"), this);
 
     /*
     */
@@ -20,7 +20,7 @@ DebugWidget::DebugWidget(QWidget *parent) :
     debugButton3 = new QPushButton(tr("3"), this);
     debugButton4 = new QPushButton(tr("4"), this);
 
-    // Ставим усилители
+    // РЎС‚Р°РІРёРј СѓСЃРёР»РёС‚РµР»Рё
     connect(clearLogButton, SIGNAL(clicked()), this, SLOT(clearDebugLog()));
     connect(printDebugInfoButton, SIGNAL(clicked()), this, SIGNAL(printDebugInfoButtonClicked()));
 
@@ -31,7 +31,7 @@ DebugWidget::DebugWidget(QWidget *parent) :
     connect(debugButton3, SIGNAL(clicked()), this, SIGNAL(debugButtonClicked3()));
     connect(debugButton4, SIGNAL(clicked()), this, SIGNAL(debugButtonClicked4()));
 
-    // конфигурируем расположение виджетов
+    // РєРѕРЅС„РёРіСѓСЂРёСЂСѓРµРј СЂР°СЃРїРѕР»РѕР¶РµРЅРёРµ РІРёРґР¶РµС‚РѕРІ
     buttonLayout1 = new QHBoxLayout;
     buttonLayout1->addWidget(clearLogButton);
     buttonLayout1->addWidget(printDebugInfoButton);
@@ -59,16 +59,16 @@ DebugWidget::DebugWidget(QWidget *parent) :
     layout->addWidget(debugLog);
 
 
-    // Прочитаем и установим стили
+    // РџСЂРѕС‡РёС‚Р°РµРј Рё СѓСЃС‚Р°РЅРѕРІРёРј СЃС‚РёР»Рё
     QFile qssFile(":/qss/qss/debugWidget.qss");
     qssFile.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(qssFile.readAll());
     setStyleSheet(styleSheet);
 
-    // Применяем расположение
+    // РџСЂРёРјРµРЅСЏРµРј СЂР°СЃРїРѕР»РѕР¶РµРЅРёРµ
     setLayout(layout);
 
-    // Создадим таймер обновления дебаг сообщений
+    // РЎРѕР·РґР°РґРёРј С‚Р°Р№РјРµСЂ РѕР±РЅРѕРІР»РµРЅРёСЏ РґРµР±Р°Рі СЃРѕРѕР±С‰РµРЅРёР№
     debugUpdateTimer = new QTimer(this);
     connect(debugUpdateTimer, SIGNAL(timeout()), this, SLOT(readDebug()));
     debugUpdateTimer->start(1000);
@@ -83,9 +83,9 @@ DebugWidget::DebugWidget(QWidget *parent) :
 void DebugWidget::readDebug()
 {
     QFile debugLogFile;
-    // Устанавливаем путь к файлу с данными о подкастах
+    // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ СЃ РґР°РЅРЅС‹РјРё Рѕ РїРѕРґРєР°СЃС‚Р°С…
     debugLogFile.setFileName("./debug.log");
-    // Если файл открылся
+    // Р•СЃР»Рё С„Р°Р№Р» РѕС‚РєСЂС‹Р»СЃСЏ
     if (debugLogFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QString newDebugLog = debugLogFile.readAll();
         if (newDebugLog.size() != debugLog->toPlainText().size()) {
@@ -94,7 +94,7 @@ void DebugWidget::readDebug()
         }
         debugLogFile.close();
     } else {
-        debugLog->setPlainText(tr("Ожидаю новых сообщений..."));
+        debugLog->setPlainText(tr("РћР¶РёРґР°СЋ РЅРѕРІС‹С… СЃРѕРѕР±С‰РµРЅРёР№..."));
     }
     debugLog->moveCursor(QTextCursor::End);
 }
@@ -106,7 +106,7 @@ void DebugWidget::clearDebugLog()
     readDebug();
 }
 
-// восстановление последнего состояния окна
+// РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РїРѕСЃР»РµРґРЅРµРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ РѕРєРЅР°
 void DebugWidget::readSettings()
 {
     QSettings settings("sytchev.ru", "regexptest");
@@ -115,7 +115,7 @@ void DebugWidget::readSettings()
 
 void DebugWidget::closeEvent(QCloseEvent *event)
 {
-    // Запись положения окна
+    // Р—Р°РїРёСЃСЊ РїРѕР»РѕР¶РµРЅРёСЏ РѕРєРЅР°
     QSettings settings("sytchev.ru", "regexptest");
     settings.setValue("DebugWidget/geometry", saveGeometry());
     hide();

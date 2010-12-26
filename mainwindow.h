@@ -16,7 +16,6 @@ public slots:
 
 private slots:
     void writeWindowSettings();
-    void showBuildNumberInTitle(QString buildNumber);
 
 private:
     QTimer *writeWindowSettingsTimer;

@@ -28,7 +28,7 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private:
-    void readSettings(); // читаем последние сохраненные настройки
+    void readSettings(); // С‡РёС‚Р°РµРј РїРѕСЃР»РµРґРЅРёРµ СЃРѕС…СЂР°РЅРµРЅРЅС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё
 
     QLabel *liveMessage;
     QPushButton *clearLogButton;

@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     qInstallMsgHandler(myMessageOutput);
 
     bool silentStart = false;
-    //qDebug() << "Ïàðàìåòðû ñòàðòà âñåãî" << argc;
+    //qDebug() << "ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ ÑÑ‚Ð°Ñ€Ñ‚Ð° Ð²ÑÐµÐ³Ð¾" << argc;
     QString testplanDirectoryKey("-d");
     QString testplanFileKey("-f");
     for(int i = 0; i < argc; ++i) {
@@ -66,13 +66,13 @@ int main(int argc, char *argv[])
         if (QString(argv[i]) == testplanFileKey) {
             silentStart = true;
         }
-        //qDebug() << "Ïàðàìåòð [" << i << "] =" << argv[i];
+        //qDebug() << "ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€ [" << i << "] =" << argv[i];
     }
 
 
     MainWindow *mainWindow = new MainWindow();
 
-    // Êàíàë ñâÿçè ìåæäó ïðèëîæåíèÿìè
+    // ÐšÐ°Ð½Ð°Ð» ÑÐ²ÑÐ·Ð¸ Ð¼ÐµÐ¶Ð´Ñƒ Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸ÑÐ¼Ð¸
     QObject::connect(&app, SIGNAL(messageAvailable(QString)), mainWindow, SLOT(receiveApplicationMessage(QString)));
 
     if (!silentStart)

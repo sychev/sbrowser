@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle(tr("Sbrowser"));
     //createTrayIcon();
 
-    // Таймер запоминания состояния
+    // РўР°Р№РјРµСЂ Р·Р°РїРѕРјРёРЅР°РЅРёСЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ
     writeWindowSettingsTimer = new QTimer(this);
     connect(writeWindowSettingsTimer, SIGNAL(timeout()), this, SLOT(writeWindowSettings()));
     writeWindowSettingsTimer->start(30 * 1000);
@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     sbrowserWidget = new SbrowserWidget(this);
     setCentralWidget(sbrowserWidget);
 
-    // Прочитаем и установим стили
+    // РџСЂРѕС‡РёС‚Р°РµРј Рё СѓСЃС‚Р°РЅРѕРІРёРј СЃС‚РёР»Рё
     QFile qssFile(":/qss/qss/sbrowserWidget.qss");
     qssFile.open(QFile::ReadOnly);
     styleSheet = QLatin1String(qssFile.readAll());
@@ -65,17 +65,8 @@ void MainWindow::readWindowSettings()
 
 void MainWindow::writeWindowSettings()
 {
-    // Запись положения окна
+    // Р—Р°РїРёСЃСЊ РїРѕР»РѕР¶РµРЅРёСЏ РѕРєРЅР°
     QSettings settings("sytchev.ru", "sbrowser");
     settings.setValue("MainWindow/geometry", saveGeometry());
     settings.setValue("MainWindow/windowState", saveState());
-}
-
-void MainWindow::showBuildNumberInTitle(QString buildNumber)
-{
-    if (!buildNumber.isEmpty()) {
-        setWindowTitle(tr("Levelbuzz test shell. Build #") + buildNumber);
-    } else {
-        setWindowTitle(tr("Levelbuzz test shell."));
-    }
 }

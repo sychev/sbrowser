@@ -1,12 +1,14 @@
-#ifndef LEVELBUZZWIDGET_H
-#define LEVELBUZZWIDGET_H
+#ifndef SBROWSERWIDGET_H
+#define SBROWSERWIDGET_H
 
 #include <QtGui>
 #include <QtCore>
 #include <QDateTime>
 #include <QtWebKit>
 
+#ifndef RELEASE
 #include "debugwidget.h"
+#endif
 
 
 class SbrowserWidget : public QWidget
@@ -32,7 +34,9 @@ private slots:
     void loadSadadDev();
     void showPostParameters();
     void showSourceCode();
+    void runTest();
     void goBack();
+    void loadUrlFromLine();
 
 private:
     void readProgramSettings();
@@ -45,9 +49,10 @@ private:
     QLabel *browserBorderLabel;
     QTextEdit *htmlSourceTextEdit;
 
+#ifndef RELEASE
     void setupDebugWidget();
     DebugWidget *debugWidget;
-    void runTest();
+#endif
     void loadUrl(QString urlString);
     QStringList inputNameList;
     QString formActionTarget;
@@ -57,4 +62,4 @@ private:
 
 };
 
-#endif // LEVELBUZZWIDGET_H
+#endif // SBROWSERWIDGET_H

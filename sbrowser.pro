@@ -3,23 +3,28 @@ QT       += core gui network webkit
 TARGET = sbrowser
 TEMPLATE = app
 
+release {
+    DEFINES += RELEASE
+}
 
-SOURCES += main.cpp\
-	mainwindow.cpp\
+SOURCES += main.cpp \
+        mainwindow.cpp \
 	singleapplication.cpp \
-    debugwidget.cpp \
-    sbrowserwidget.cpp
+        sbrowserwidget.cpp
 
-HEADERS  += mainwindow.h\
+HEADERS  += mainwindow.h \
         singleapplication.h \
-    debugwidget.h \
-    sbrowserwidget.h
+        sbrowserwidget.h
 
-RC_FILE += icon.rc # данные о значке
+RC_FILE += icon.rc # РґР°РЅРЅС‹Рµ Рѕ Р·РЅР°С‡РєРµ
 
 RESOURCES += \
     sbrowser.qrc
 
 OTHER_FILES += \
-    qss/sbrowserWidget.qss \
-    qss/debugWidget.qss
+    qss/sbrowserWidget.qss
+release {
+OTHER_FILES += qss/debugWidget.qss
+SOURCES += debugwidget.cpp
+HEADERS += debugwidget.h
+}

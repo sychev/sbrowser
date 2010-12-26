@@ -12,7 +12,7 @@ SbrowserWidget::SbrowserWidget(QWidget *parent) :
 
     urlLineEdit = new QLineEdit(this);
     urlLineEdit->setFont(monotypeFont);
-    urlLineEdit->setText("http://sadad.dev/");
+    urlLineEdit->setText("http://google.com/");
 
     postVarsTextEdit = new QTextEdit(this);
     postVarsTextEdit->setFont(monotypeFont);
@@ -21,7 +21,7 @@ SbrowserWidget::SbrowserWidget(QWidget *parent) :
     htmlSourceTextEdit = new QTextEdit(this);
 
     webView = new QWebView(this);
-    webView->load(QUrl("http://sadad.dev/"));
+    webView->load(QUrl("http://google.com/"));
     webView->page()->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
     connect(webView, SIGNAL(urlChanged(QUrl)), this, SLOT(onUrlChanged(QUrl)));
     connect(webView, SIGNAL(loadFinished(bool)), this, SLOT(showPostParameters()));
@@ -42,7 +42,9 @@ SbrowserWidget::SbrowserWidget(QWidget *parent) :
     browserBorderLabel->lower();
 
     readProgramSettings();
+#ifndef RELEASE
     setupDebugWidget();
+#endif
 }
 
 SbrowserWidget::~SbrowserWidget()
@@ -63,9 +65,26 @@ void SbrowserWidget::keyPressEvent(QKeyEvent *event)
 {
     if((event->key() == Qt::Key_Return) || (event->key() == Qt::Key_Enter)) {
         if (event->modifiers() & Qt::ControlModifier) {
+// Ctrl + Enter
             runTest();
         } else {
-            loadUrl(urlLineEdit->text());
+            loadUrlFromLine();
+// Enter
+        }
+    }
+    if((event->key() == Qt::Key_L) && (event->modifiers() & Qt::ControlModifier)) {
+// Ctrl + L
+        urlLineEdit->setFocus();
+        urlLineEdit->selectAll();
+    }
+    if (event->modifiers() & Qt::AltModifier) {
+        if(event->key() == Qt::Key_Left) {
+// Alt + Left
+            webView->back();
+        }
+        if(event->key() == Qt::Key_Right) {
+// Alt + Right
+            webView->forward();
         }
     }
 }
@@ -114,7 +133,7 @@ void SbrowserWidget::loadUrl(QString urlString)
 
 void SbrowserWidget::loadSadadDev()
 {
-    loadUrl("http://sadad.dev/");
+    loadUrl("http://google.com/");
 }
 
 void SbrowserWidget::showPostParameters()
@@ -208,17 +227,24 @@ void SbrowserWidget::showHelp()
 {
     QMessageBox::about(this, tr("SBrowser help"),
     tr("<h1>SBrowser 0.1.1</h1>"
-    "<h2>Помощь</h2>"
-    "<p><b>F1</b> - показать это окно</p>"
-    "<p><b>F2</b> - загрузить sadad.dev</p>"
-    "<p><b>F3</b> - показать POST параметры</p>"
-    "<p><b>Ctrl + Return</b> - Сделать POST запрос</p>"
-    "<p><b>F5</b> - назад, показав предыдущие POST параметры</p>"
-    "<h2>POST примеры</h2>"
+    "<h2>Help</h2>"
+    "<p><b>F1</b> - show this windows</p>"
+    "<p><b>F2</b> - load google.com</p>"
+    "<p><b>F3</b> - show POST parameters of current page</p>"
+    "<p><b>Ctrl + Enter</b> - send POST request</p>"
+    "<p><b>F5</b> - back, and show last POST parameters</p>"
+    "<h2>POST examples</h2>"
     "<p>$_POST[\"username\"] = \"<b>alex</b>\";<br />username = alex</p>"
     "<p>$_POST[\"pwd\"] = \"<b>5\" screen isn't too big</b>\";<br />pwd = 5\" screen isn't too big</p>"
-    "<h2>Автор</h2>"
-    "<p><b>Алексей Сычев</b> - 194145@gmail.com</p>"));
+    "<h2>Browsing</h2>"
+    "<p><b>Enter</b> - load page</p>"
+    "<p><b>Ctrl + L</b> - edit address line</p>"
+    "<p><b>Alt + Left</b> - go back</p>"
+    "<p><b>Alt + Right</b> - go forward</p>"
+    "<h2>Author</h2>"
+    "<p><b>Alex Sychev</b></p>"
+    "<p><b>mail:</b> <a href='mailto:194145@gmail.com'>194145@gmail.com</a></p>"
+    "<p><b>site:</b> <a href='http://sychev.com/'>sychev.com</a></p>"));
 }
 
 void SbrowserWidget::readProgramSettings()
@@ -229,6 +255,7 @@ void SbrowserWidget::writeProgramSettings()
 {
 }
 
+#ifndef RELEASE
 void SbrowserWidget::setupDebugWidget()
 {
     debugWidget = new DebugWidget;
@@ -243,6 +270,7 @@ void SbrowserWidget::setupDebugWidget()
     //connect(debugWidget, SIGNAL(debugButtonClicked3()), this, SLOT(debugSlot3()));
     //connect(debugWidget, SIGNAL(debugButtonClicked4()), this, SLOT(debugSlot4()));
 }
+#endif
 
 void SbrowserWidget::debugSlot1()
 {
@@ -250,4 +278,9 @@ void SbrowserWidget::debugSlot1()
 
 void SbrowserWidget::debugSlot2()
 {
+}
+
+void SbrowserWidget::loadUrlFromLine()
+{
+    loadUrl(urlLineEdit->text());
 }
